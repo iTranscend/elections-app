@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+
+<head>
+  <title><%= title %></title>
+  <link rel='stylesheet' href='/stylesheets/style.css' />
+</head>
+
+<body>
+  <h1><%= title %></h1>
+  <p>Welcome to the <%= title %> App</p>
+  <form action="/register" method="post" enctype="multipart/form-data">
+    <label for="firstname">Firstname</label>
+    <br>
+    <input type="text" name="firstname" id="firstname" required>
+    <br>
+    <br>
+    <label for="lastname">Lastname</label>
+    <br>
+    <input type="text" name="lastname" id="lastname" required>
+    <br>
+    <br>
+    <label for="email">Email</label>
+    <br>
+    <input type="email" name="email" id="email" required>
+    <br>
+    <br>
+    <label for="image">Facial Image:</label>
+    <br>
+    <input type="file" name="image" id="image" required>
+    <br>
+    <br>
+    <label for="password">Password</label>
+    <br>
+    <input type="password" name="password" id="password" required>
+    <br>
+    <br>
+    <label for="passwordConf">Password Confirmation</label>
+    <br>
+    <input type="password" name="passConf" id="passwordConf" required>
+    <br>
+    <br>
+    <input type="submit" value="Submit">
+    <br>
+
+    <p>Don't have an account? <a href="/index/register">Register</a></p>
+  </form>
+</body>
+
+</html>

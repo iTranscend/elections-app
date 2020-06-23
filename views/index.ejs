@@ -1,11 +1,30 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
-  </head>
-  <body>
-    <h1><%= title %></h1>
-    <p>Welcome to <%= title %></p>
-  </body>
+
+<head>
+  <title><%= title %></title>
+  <link rel='stylesheet' href='/stylesheets/style.css' />
+</head>
+
+<body>
+  <h1><%= title %></h1>
+  <p>Welcome to the <%= title %> App</p>
+  <form action="" method="post">
+    <label for="email">Email</label>
+    <br>
+    <input type="email" name="" id="email">
+    <br>
+    <br>
+    <label for="password">Password</label>
+    <br>
+    <input type="password" name="" id="password">
+    <br>
+    <br>
+    <input type="submit" value="Login">
+    <br>
+
+    <p>Don't have an account? <a href="register">Register</a></p>
+  </form>
+</body>
+
 </html>
