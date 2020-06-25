@@ -2,6 +2,10 @@
 
 Software Studio Web-Team Project
 
+## Pre-requisites
+
+Node.js should be installed. Get Node.js [here](https://nodejs.org/en/download/)
+
 ## Installation
 
     git clone https://github.com/iTranscend/elections-app.git
