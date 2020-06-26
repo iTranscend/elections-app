@@ -2,11 +2,10 @@
 
 Software Studio Web-Team Project
 
-## Pre-requisites
-
-Node.js should be installed. Get Node.js [here](https://nodejs.org/en/download/)
-
 ## Installation
+
+-Node.js should be installed. Get Node.js [here](https://nodejs.org/en/download/)
+-Navigate to a directory of your choice using a CLI and run the following commands in order:
 
     git clone https://github.com/iTranscend/elections-app.git
     cd elections-app
@@ -19,11 +18,17 @@ Node.js should be installed. Get Node.js [here](https://nodejs.org/en/download/)
     - Navigate to localhost/phpmyadmin
     - Create a new database named "elections-app"
 
-After creating the database go back to the project and run
+After creating the database go back to the project and run:
 
     knex migrate:latest
 
 This will update your database to the config of mine
+
+Next, run the seed file(s):
+
+    knex seed:run
+
+This will populate your tables with necessary default application data like user roles config
 
 ### Run the application
 
