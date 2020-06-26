@@ -2,7 +2,7 @@ var databaseOptions = {
   host: "localhost",
   user: "root",
   password: "",
-  database: "elections",
+  database: "elections-app",
 };
 
 module.exports = databaseOptions;
