@@ -1,5 +1,5 @@
-var express = require("express");
-var router = express.Router();
+let express = require("express");
+let router = express.Router();
 // let bodyParser = require("body-parser");
 // let urlencodedParser = bodyParser.urlencoded({ extended: false });
 let multer = require("multer");
@@ -26,6 +26,31 @@ conn.connect((err) => {
 /* GET landing/login page. */
 router.get("/", function (req, res, next) {
   res.render("index", { title: "Elections" });
+});
+
+router.post("/login", upload.none(), function (req, res, next) {
+  let email = req.body.email;
+  let password = req.body.password;
+  console.log(email);
+  if (email && password) {
+    conn.query(
+      "SELECT * FROM users WHERE email = ? AND password = ?",
+      [email, password],
+      function (error, results, fields) {
+        if (results.length > 0) {
+          req.session.loggedin = true;
+          req.session.email = email;
+          res.redirect("/users/home");
+        } else {
+          res.send("Incorrect email and/or Password!");
+        }
+        res.end();
+      }
+    );
+  } else {
+    res.send("Please enter email and Password!");
+    res.end();
+  }
 });
 
 router.get("/register", function (req, res, next) {
