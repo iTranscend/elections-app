@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %></title>
+</head>
+
+<body>
+  <h1><%= title %> Admin Portal</h1>
+  <p><%= details.firstname %></p>
+  <form action="/" method="post">
+    <input type="submit" value="Start Election">
+  </form>
+  <br>
+  <a href="/candidates">Approve/Decline Candidates</a>
+  <br>
+
+  <form action="/" method="post">
+    <label for="voter-deadline"></label>
+    <input type="datetime" name="voter_deadline" id="voter-deadline">
+    <input type="submit" value="Update">
+  </form>
+
+  <form action="/" method="post">
+    <label for="candidate-deadline"></label>
+    <input type="datetime" name="candidate_deadline" id="candidate-deadline">
+    <input type="submit" value="Update">
+  </form>
+
+  <hr>
+
+  <h3>Create Position of office</h3>
+  <form action="/admin/createPosition" method="post">
+    <label for="position"></label>
+    <input type="text" name="position" id="position">
+    <input type="submit" value="Create">
+  </form>
+
+  <br>
+  <hr>
+
+  <form action="/" method="post">
+    <input type="submit" value="Print Report">
+  </form>
+
+</body>
+
+</html>
