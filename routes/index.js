@@ -40,7 +40,12 @@ router.post("/login", upload.none(), function (req, res, next) {
         if (results.length > 0) {
           req.session.loggedin = true;
           req.session.email = email;
-          res.redirect("/users/home");
+
+          if (results[0].role_id == 1) {
+            res.redirect("/admin/home");
+          } else if (results[0].role_id == 2 || results[0].role_id == 3) {
+            res.redirect("/users/home");
+          }
         } else {
           res.send("Incorrect email and/or Password!");
         }
