@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title><%= title %></title>
+  <link rel='stylesheet' href='/stylesheets/style.css' />
+</head>
+
+<body>
+  <h1><%= title %></h1>
+  <h3>Update Your details</h3>
+
+  <form action="/users/updateProfile" method="post">
+    <label for="firstname">Firstname</label>
+    <input type="text" name="firstname" id="firstname" placeholder="<%= user.firstname %>" required>
+
+    <label for="lastname">Lastname</label>
+    <input type="text" name="lastname" id="lastname" placeholder="<%= user.lastname %>" required>
+
+    <input type="submit" value="Update">
+  </form>
+  <br>
+  <hr>
+
+  <h3>Apply for a Position of office</h3>
+
+  <form action="/users/apply/<%=user.id%>" method="post">
+    <label for="position"></label>
+    <select name="position" id="position">
+      <% positions.forEach(position => { %>
+      <option value="<%= position.id %>"><%= position.name %></option>
+      <% }) %>
+    </select>
+
+    <input type="submit" value="Apply">
+  </form>
+
+</body>
+
+</html>
