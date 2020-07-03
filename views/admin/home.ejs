@@ -9,22 +9,22 @@
 
 <body>
   <h1><%= title %> Admin Portal</h1>
-  <p><%= details.firstname %></p>
+  <p><%= user.firstname %></p>
   <form action="/" method="post">
     <input type="submit" value="Start Election">
   </form>
   <br>
-  <a href="/candidates">Approve/Decline Candidates</a>
+  <a href="/admin/candidates">Approve/Decline Candidates</a>
   <br>
 
-  <form action="/" method="post">
-    <label for="voter-deadline"></label>
+  <form action="admin/voterDeadline" method="post">
+    <label for="voter-deadline">Voter Deadline</label>
     <input type="datetime" name="voter_deadline" id="voter-deadline">
     <input type="submit" value="Update">
   </form>
 
-  <form action="/" method="post">
-    <label for="candidate-deadline"></label>
+  <form action="/admin/candidateDeadline" method="post">
+    <label for="candidate-deadline">Candidate Deadline</label>
     <input type="datetime" name="candidate_deadline" id="candidate-deadline">
     <input type="submit" value="Update">
   </form>
@@ -37,6 +37,13 @@
     <input type="text" name="position" id="position">
     <input type="submit" value="Create">
   </form>
+  <br>
+  <h4>Availabe Posts</h4>
+  <ol>
+    <% positions.forEach(position => { %>
+    <li><%= position.name %></li>
+    <% }) %>
+  </ol>
 
   <br>
   <hr>
@@ -45,6 +52,15 @@
     <input type="submit" value="Print Report">
   </form>
 
+  <script type="text/javascript">
+    let message = "<%= message %>";
+    showAlert = function (err) {
+      alert(message);
+    }
+    if (message != "") {
+      showAlert(message);
+    }
+  </script>
 </body>
 
 </html>
