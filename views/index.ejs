@@ -25,6 +25,16 @@
 
     <p>Don't have an account? <a href="register">Register</a></p>
   </form>
+
+  <script type="text/javascript">
+    let message = "<%= message %>";
+    showAlert = function (err) {
+      alert(message);
+    }
+    if (message != "") {
+      showAlert(message);
+    }
+  </script>
 </body>
 
 </html>

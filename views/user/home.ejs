@@ -11,6 +11,17 @@
   <h3>You are logged in to the <%= title %> App</h3>
   <p><%= user.firstname %></p>
   <a href="/users/profile">Update Profile</a>
+
+
+  <script type="text/javascript">
+    let message = "<%= message %>";
+    showAlert = function (err) {
+      alert(message);
+    }
+    if (message != "") {
+      showAlert(message);
+    }
+  </script>
 </body>
 
 </html>
