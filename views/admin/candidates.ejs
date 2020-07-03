@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %></title>
+</head>
+
+<body>
+  <h1><%= title %> Admin Portal</h1>
+  <hr>
+  <table>
+    <thead>
+      <th>#</th>
+      <th>Name</th>
+      <th>Position</th>
+      <th>Status</th>
+      <th>Update Status</th>
+    </thead>
+    <tbody>
+      <% candidates.forEach(candidate => { %>
+      <tr>
+        <td><%= candidate.candidate_id %></td>
+        <td><%= candidate.firstname + ' ' + candidate.lastname %></td>
+        <td><%= candidate.position_name %></td>
+        <td>
+          <% if (candidate.status == 0) { %>
+          <span>Disapproved</span>
+          <% } else { %>
+          <span>Approved</span>
+          <% } %>
+        </td>
+        <td>
+          <% if (candidate.status == 0) { %>
+          <form action="/admin/approve/<%= candidate.candidate_id %>" method="post">
+            <input type="submit" value="Approve">
+          </form>
+          <% } else { %>
+          <form action="/admin/disapprove/<%= candidate.candidate_id %>" method="post">
+            <input type="submit" value="Disapprove">
+          </form>
+          <% } %>
+        </td>
+      </tr>
+      <% }) %>
+    </tbody>
+  </table>
+</body>
+
+</html>
