@@ -25,37 +25,41 @@ conn.connect((err) => {
 
 /* GET landing/login page. */
 router.get("/", function (req, res, next) {
-  res.render("index", { title: "Elections" });
+  // res.render("index", { title: "Elections" });
+  res.render("index", { message: req.session.message, title: "Elections" });
+  // delete req.session.message;
 });
 
 router.post("/login", upload.none(), function (req, res, next) {
   let email = req.body.email;
   let password = req.body.password;
   console.log(email);
-  if (email && password) {
-    conn.query(
-      "SELECT * FROM users WHERE email = ? AND password = ?",
-      [email, password],
-      function (error, results, fields) {
-        if (results.length > 0) {
-          req.session.loggedin = true;
-          req.session.email = email;
+  conn.query(
+    "SELECT * FROM users WHERE email = ? AND password = ?",
+    [email, password],
+    function (error, results, fields) {
+      if (results.length > 0) {
+        req.session.loggedin = true;
+        req.session.email = email;
 
-          if (results[0].role_id == 1) {
-            res.redirect("/admin/home");
-          } else if (results[0].role_id == 2 || results[0].role_id == 3) {
-            res.redirect("/users/home");
-          }
-        } else {
-          res.send("Incorrect email and/or Password!");
+        if (results[0].role_id == 2 || results[0].role_id == 3) {
+          // req.session.message = "Login Successful";
+          return res.redirect("/users/home");
+        } else if (results[0].role_id == 1) {
+          // req.session.message = "Login Successful";
+          return res.redirect("/admin/home");
         }
-        res.end();
+      } else {
+        // req.session.message = "Incorrect username or password";
+        return res.redirect("/");
       }
-    );
-  } else {
-    res.send("Please enter email and Password!");
-    res.end();
-  }
+    }
+  );
+});
+
+router.post("/logout", function (req, res, next) {
+  delete req.session;
+  res.redirect("/");
 });
 
 router.get("/register", function (req, res, next) {
@@ -71,14 +75,16 @@ router.post("/register", upload.single("image"), function (req, res, next) {
 
   let sqlRegister =
     "INSERT INTO users(firstname, lastname, email, password, profile_pic, role_id) VALUES (?)";
-  let values = [firstName, lastName, email, password, image, 3];
+  let values = [firstName, lastName, email, password, image, 2];
 
   conn.query(sqlRegister, [values], function (err) {
     if (err) throw err;
   });
+
+  req.session.message = "Registration Successful! Proceed to login.";
   res.render("index", {
     title: "Elections",
-    msg: "Registration Successful! Proceed to login.",
+    message: req.session.message,
   });
 });
 
