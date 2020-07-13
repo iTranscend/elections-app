@@ -7,10 +7,39 @@
 </head>
 
 <body>
+  <form action="/logout" method="post">
+    <label for="logout">Candidate Deadline</label>
+    <input type="submit" id="logout" value="Logout">
+  </form>
   <h1><%= title %></h1>
   <h3>You are logged in to the <%= title %> App</h3>
   <p><%= user.firstname %></p>
   <a href="/users/profile">Update Profile</a>
+
+  <hr>
+
+  <h2>Cast Your votes</h2>
+  <!--  candidacy['Vice-president'][0].firstname  -->
+  <!-- Object literals are used here because just using the positions variable generates the positions as strings instead of as arrays. So a nifty workaround had to be found -->
+  <% for (let position in candidacy) { %>
+  <h3><%= position %><%= candidacy[position].id %></h3>
+  <form action="/users/vote/<%=user.id%>/<%=candidacy[position].id%>" method="post">
+    <% if (candidacy[`${position}`].candidates.length > 0) { %>
+    <% for (let i = 0; i < candidacy[`${position}`].candidates.length; i++) { %>
+    <p><%= candidacy[`${position}`].candidates[i].firstname %> <%= candidacy[`${position}`].candidates[i].lastname %>
+    </p>
+
+    <img src="/uploads/<%=candidacy[`${position}`].candidates[i].profile_pic%>" alt="Candidate Picture" width="200px"
+      height="200px">
+    <input type="radio" name="candidate" value="<%= candidacy[`${position}`].candidates[i].candidate_id %>" required>
+    <% } %>
+    <% } %>
+    <input type="submit" value="Vote">
+  </form>
+
+  <% } %>
+  <!--This is the submit button for the vote-->
+  <!-- <input type="submit" value="SUBMIT" class="btn"> -->
 
 
   <script type="text/javascript">
