@@ -8,6 +8,7 @@
 </head>
 
 <body>
+  <a href="/admin/home">Back</a>
   <h1><%= title %> Admin Portal</h1>
   <hr>
   <table>
@@ -46,6 +47,15 @@
       <% }) %>
     </tbody>
   </table>
+  <script type="text/javascript">
+    let message = "<%= message %>";
+    showAlert = function (err) {
+      alert(message);
+    }
+    if (message != "") {
+      showAlert(message);
+    }
+  </script>
 </body>
 
 </html>
