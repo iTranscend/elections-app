@@ -8,24 +8,33 @@
 </head>
 
 <body>
+  <form action="/logout" method="post">
+    <input type="submit" id="logout" value="Logout">
+  </form>
   <h1><%= title %> Admin Portal</h1>
   <p><%= user.firstname %></p>
-  <form action="/" method="post">
+  <% if ( startElection == 0 || startElection == 2) { %>
+  <form action="/admin/startElection" method="post">
     <input type="submit" value="Start Election">
   </form>
+  <% } else if (startElection == 1) { %>
+  <form action="/admin/endElection" method="post">
+    <input type="submit" value="End Election">
+  </form>
+  <% } %>
   <br>
   <a href="/admin/candidates">Approve/Decline Candidates</a>
   <br>
 
-  <form action="admin/voterDeadline" method="post">
+  <form action="/admin/voterDeadline" method="post">
     <label for="voter-deadline">Voter Deadline</label>
-    <input type="datetime" name="voter_deadline" id="voter-deadline">
+    <input type="datetime-local" name="voterDeadline" id="voter-deadline">
     <input type="submit" value="Update">
   </form>
 
   <form action="/admin/candidateDeadline" method="post">
     <label for="candidate-deadline">Candidate Deadline</label>
-    <input type="datetime" name="candidate_deadline" id="candidate-deadline">
+    <input type="datetime-local" name="candidateDeadline" id="candidate-deadline">
     <input type="submit" value="Update">
   </form>
 
@@ -48,9 +57,10 @@
   <br>
   <hr>
 
-  <form action="/" method="post">
+  <!-- <form action="/" method="post">
     <input type="submit" value="Print Report">
-  </form>
+  </form> -->
+  <a href="/admin/results">View Results</a>
 
   <script type="text/javascript">
     let message = "<%= message %>";
