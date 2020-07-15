@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Audiowide&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,200;0,400;0,500;1,100;1,200;1,600;1,700&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <title><%= title %> : Results</title>
+  <script src=" https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <title></title>
+</head>
+
+<body>
+  <a href="/admin/home">Back</a>
+  <h1><%= title %> Admin Portal</h1>
+  <hr>
+  <% for (let position in candidacy) { %>
+  <h3><%= position %><%= candidacy[position].id %></h3>
+  <% if (candidacy[`${position}`].candidates.length > 0) { %>
+  <% for (let i = 0; i < candidacy[`${position}`].candidates.length; i++) { %>
+  <p><%= candidacy[`${position}`].candidates[i].firstname %> <%= candidacy[`${position}`].candidates[i].lastname %>
+  </p>
+
+  <img src="/uploads/<%=candidacy[`${position}`].candidates[i].profile_pic%>" alt="Candidate Picture" width="200px"
+    height="200px">
+  <p><%=candidacy[`${position}`].candidates[i].votes%></p>
+  <% } %>
+  <% } %>
+  <% } %>
+  <hr>
+  <a href="/admin/publishResults">Publish Results</a>
+  <script type="text/javascript">
+    let message = "<%= message %>";
+    showAlert = function (err) {
+      alert(message);
+    }
+    if (message != "") {
+      showAlert(message);
+    }
+  </script>
+</body>
+
+</html>
