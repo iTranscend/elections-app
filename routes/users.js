@@ -57,10 +57,8 @@ router.get("/home", async function (req, res, next) {
                 user: results[0],
                 candidacy,
               });
+              // req.session.message = "";
             }, 4000);
-            // req.session.message = "";
-            // await getCandidates(positions).then((candidacy, results) => {
-            // });
           }
         );
       }
@@ -98,51 +96,98 @@ router.get("/profile", function (req, res, next) {
   }
 });
 
+router.post("/updateProfile", upload.none(), async function (req, res, next) {
+  try {
+    let firstname = await req.body.firstname;
+    let lastname = await req.body.lastname;
+    let email = await req.session.email;
+
+    conn.query(
+      "UPDATE users SET firstname = ?, lastname = ? WHERE email = ?",
+      [firstname, lastname, email],
+      async function (error, result) {
+        try {
+          if (error) throw error;
+          await console.log(result.affectedRows + "record(s) updated");
+          req.session.message = "Personal Info Updated";
+          res.redirect("/users/profile");
+        } catch (error) {
+          console.log(error);
+        }
+      }
+    );
+  } catch (error) {
+    console.log(error);
+  }
+});
+
 router.post("/vote/:voter/:position", upload.none(), async function (
   req,
   res,
   next
 ) {
   try {
-    let voter = await req.params.voter;
-    let position = await req.params.position;
-    let candidate = await req.body.candidate;
-    let values = [voter, position, candidate];
-    await console.log(values);
-    // Check if voter has voted for this post before
-    conn.query(
-      "SELECT * FROM  votes WHERE voter_id = ? AND position_id = ?",
-      [voter, position],
-      async function (error, results, fields) {
-        try {
-          // if (error) throw error;
-          await console.log("Number of entries" + results.length);
-          if (results.length > 0) {
-            req.session.message =
-              "You have already cast your vote for this position of office before";
-            res.redirect("/users/home");
-          } else if (results.length == 0) {
-            console.log(values);
-            conn.query(
-              "INSERT INTO votes (voter_id, position_id, candidate_id) VALUES (?, ?, ?)",
-              [voter, position, candidate],
-              async function (error) {
-                try {
-                  if (error) throw error;
+    // Check if election has started
+    conn.query("SELECT * FROM config WHERE id = 1", async function (
+      err,
+      rows,
+      fields
+    ) {
+      try {
+        let electionStarted = rows[0].value;
+        console.log("ElectionStarted:" + electionStarted);
+        if (electionStarted == 0) {
+          req.session.message =
+            "Voting has not started! Please wait until the commencement time";
+          res.redirect("/users/home");
+        } else if (electionStarted == 2) {
+          req.session.message = "Sorry, Voting has Ended!";
+          res.redirect("/users/home");
+        } else if (electionStarted == 1) {
+          let voter = await req.params.voter;
+          let position = await req.params.position;
+          let candidate = await req.body.candidate;
+          let values = [voter, position, candidate];
+          await console.log(values);
+          // Check if voter has voted for this post before
+          conn.query(
+            "SELECT * FROM  votes WHERE voter_id = ? AND position_id = ?",
+            [voter, position],
+            async function (error, results, fields) {
+              try {
+                // if (error) throw error;
+                await console.log("Number of entries" + results.length);
+                if (results.length > 0) {
                   req.session.message =
-                    "Your vote has been recorded. Results will be published at the end of the election";
+                    "You have already cast your vote for this position of office";
                   res.redirect("/users/home");
-                } catch (error) {
-                  console.log(error);
+                } else if (results.length == 0) {
+                  console.log(values);
+                  conn.query(
+                    "INSERT INTO votes (voter_id, position_id, candidate_id) VALUES (?, ?, ?)",
+                    [voter, position, candidate],
+                    async function (error) {
+                      try {
+                        if (error) throw error;
+                        req.session.message =
+                          "Your vote has been recorded. Results will be published at the end of the election";
+                        res.redirect("/users/home");
+                      } catch (error) {
+                        console.log(error);
+                      }
+                    }
+                  );
                 }
+              } catch (error) {
+                console.log(error);
               }
-            );
-          }
-        } catch (error) {
-          console.log(error);
+            }
+          );
         }
+      } catch (error) {
+        console.log(error);
       }
-    );
+    });
   } catch (error) {
     console.log(error);
   }
@@ -165,8 +210,8 @@ router.post("/apply/:id", upload.none(), async function (req, res, next) {
         if (results.length > 0) {
           req.session.message =
             "You are already contesting for a post, Contact the elections officer to change your stance";
-          res.redirect("users/profile");
-        } else {
+          res.redirect("/users/profile");
+        } else if (results.length == 0) {
           conn.query(
             "INSERT INTO candidates(position_id, user_id) VALUES (?)",
             [values],
