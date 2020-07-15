@@ -1,0 +1,97 @@
+
+@mixin bodysetup {
+    width: 100%;
+    height: auto;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+    box-sizing: border-box;
+    font-family: poppins;
+}
+
+$blue : rgb(17, 89, 245);
+$red : rgb(226, 24, 24);
+@mixin inputfunc{
+    border: 1.5px solid $blue;
+    height: 30px;
+    width: 100%;
+    border-radius: 20px;
+    -webkit-border-radius: 20px;
+    -moz-border-radius: 20px;
+    -ms-border-radius: 20px;
+    -o-border-radius: 20px;
+    margin-bottom: 30px;
+    padding-left: 15px;
+    input{
+        width: 80%;
+        height: 80%;
+        border: none;
+        &::placeholder{
+            color: $blue;
+            opacity: .7;
+        }
+        &:focus{
+            outline: none;
+        }
+       
+    }
+}
+
+
+
+@mixin btn{
+    border: 1.5px solid $blue;
+    height: 40px;
+    border-radius: 20px;
+    position: relative;
+    margin:  auto;
+    width: 80%;
+    font-size: 15px;
+    background-color: $blue;
+    color: #fff;
+    cursor: pointer;
+    font-weight: 500;
+    transition: .3s ease-in;
+    -webkit-transition: .3s ease-in;
+    -moz-transition: .3s ease-in;
+    -ms-transition: .3s ease-in;
+    -o-transition: .3s ease-in;
+    text-align: center;
+    font-family: poppins;
+    &:hover
+{
+    height: 45px;
+    width: 83%;
+    }
+}
+
+@mixin upload{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: auto;
+    padding: 20px;
+
+  label{
+       @include btn();
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      input[type="file"]
+      {
+          display: none;
+      }  
+  }
+  img{
+    width: 60%;
+    height: auto;
+    margin-top: 20px;
+}
+}
+
+@mixin border{
+    width: 90%;
+    height: 1px;
+    background-color: $blue;
+    margin: 60px auto;
+}
