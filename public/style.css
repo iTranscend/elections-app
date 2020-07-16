@@ -769,13 +769,46 @@ html {
 
 #admin .admin .admin-form .btn-container {
   margin-top: 10%;
+  margin-bottom: 10%;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  border: 1px solid #1159f5;
+}
+
+#admin .admin .admin-form .btn-container form {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  width: 100%;
+}
+
+#admin .admin .admin-form .btn-container form .btn {
+  width: 80%;
+  height: 50px;
+  padding: 2px;
 }
 
 #admin .admin .admin-form .btn-container .btn {
   width: 40%;
+  height: 40px;
+  padding: 2px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  text-decoration: none;
 }
 
 #admin .admin img {

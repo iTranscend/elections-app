@@ -4,49 +4,85 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title><%= title %></title>
+  <link href="https://fonts.googleapis.com/css2?family=Audiowide&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,200;0,400;0,500;1,100;1,200;1,600;1,700&display=swap"
+    rel="stylesheet">
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet">
+
+  <link rel="stylesheet" href="/style.css" type="text/css">
+  <title>Applications :: <%= title %></title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 
-<body>
-  <a href="/admin/home">Back</a>
-  <h1><%= title %> Admin Portal</h1>
-  <hr>
-  <table>
-    <thead>
-      <th>#</th>
-      <th>Name</th>
-      <th>Position</th>
-      <th>Status</th>
-      <th>Update Status</th>
-    </thead>
-    <tbody>
-      <% candidates.forEach(candidate => { %>
-      <tr>
-        <td><%= candidate.candidate_id %></td>
-        <td><%= candidate.firstname + ' ' + candidate.lastname %></td>
-        <td><%= candidate.position_name %></td>
-        <td>
-          <% if (candidate.status == 0) { %>
-          <span>Disapproved</span>
-          <% } else { %>
-          <span>Approved</span>
-          <% } %>
-        </td>
-        <td>
-          <% if (candidate.status == 0) { %>
-          <form action="/admin/approve/<%= candidate.candidate_id %>" method="post">
-            <input type="submit" value="Approve">
-          </form>
-          <% } else { %>
-          <form action="/admin/disapprove/<%= candidate.candidate_id %>" method="post">
-            <input type="submit" value="Disapprove">
-          </form>
-          <% } %>
-        </td>
-      </tr>
-      <% }) %>
-    </tbody>
-  </table>
+<body id="application">
+  <div class="nav">
+    <!--Logo-->
+    <div class="logo">
+      <img src="/img/logo.jpeg" alt="Logo" style="width: 120px; height: 60px;">
+      <p>REDEEMER'S UNIVERSITY VOTING SYSTEM</p>
+    </div>
+    <div class="profile-info">
+      <div class="profile-text">
+        <span><%= user.firstname %> <%= user.lastname %></span>
+        <!-- <span></span> -->
+        <% if (user.role_id == 1) { %>
+        <span>ADMIN</span>
+        <% } %>
+      </div>
+      <img src="/uploads/<%= user.profile_pic %>">
+
+    </div>
+
+    <a href="/logout">Log out</a>
+  </div>
+  <div class="container">
+    <a href="/admin/home" class="btn">
+      <ion-icon name="arrow-back-outline"></ion-icon>
+    </a>
+
+    <h2>Candidate Applications</h2>
+    <table class="table table-hover table-striped">
+      <thead>
+        <tr>
+          <th scope="col"></th>
+          <th scope="col">Name</th>
+          <th scope="col">Position</th>
+          <th scope="col">Status</th>
+          <th scope="col">Update Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% candidates.forEach(candidate => { %>
+        <tr>
+          <td>
+            <ion-icon name="person"></ion-icon>
+          </td>
+          <td><%= candidate.firstname + ' ' + candidate.lastname %></td>
+          <td><%= candidate.position_name %></td>
+          <td>
+            <% if (candidate.status == 0) { %>
+            <span>Disapproved</span>
+            <% } else { %>
+            <span>Approved</span>
+            <% } %>
+          </td>
+          <td>
+            <% if (candidate.status == 0) { %>
+            <form action="/admin/approve/<%= candidate.candidate_id %>" method="post">
+              <input type="submit" class="btn btn-success" value="Approve">
+            </form>
+            <% } else { %>
+            <form action="/admin/disapprove/<%= candidate.candidate_id %>" method="post">
+              <input type="submit" class="btn btn-danger" value="Disapprove">
+            </form>
+            <% } %>
+          </td>
+        </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  </div>
   <script type="text/javascript">
     let message = "<%= message %>";
     showAlert = function (err) {
@@ -56,6 +92,8 @@
       showAlert(message);
     }
   </script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+  <% include ../partials/footer %>
 </body>
 
 </html>

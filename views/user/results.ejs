@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Audiowide&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,200;0,400;0,500;1,100;1,200;1,600;1,700&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="/style.css" type="text/css">
+  <title>Results :: <%= title %></title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+
+<body id="report">
+  <% include ../partials/nav %>
+
+  <div class="election">
+    <a href="/users/home" class="btn">
+      <ion-icon name="arrow-back-outline"></ion-icon>
+    </a>
+    <h2>
+      E L E C T I O N - R E S U L T S
+    </h2>
+
+    <% for (let position in candidacy) { %>
+    <div class="wrap">
+      <h2>
+        <%= position %>
+      </h2>
+      <% if (candidacy[`${position}`].candidates.length > 0) { %>
+      <div class="position">
+        <% for (let i = 0; i < candidacy[`${position}`].candidates.length; i++) { %>
+        <span>
+          <!-- <ion-icon name="person"></ion-icon> -->
+          <img src="/uploads/<%=candidacy[`${position}`].candidates[i].profile_pic%>" alt="Candidate Picture"
+            width="200px" height="200px">
+          <p><%= candidacy[`${position}`].candidates[i].firstname %>
+            <%= candidacy[`${position}`].candidates[i].lastname %></p>
+          <span><%=candidacy[`${position}`].candidates[i].votes%></span>
+        </span>
+        <% } %>
+      </div>
+      <% } %>
+
+    </div>
+    <% } %>
+  </div>
+
+
+  <script type="text/javascript">
+    let message = "<%= message %>";
+    showAlert = function (err) {
+      alert(message);
+    }
+    if (message != "") {
+      showAlert(message);
+    }
+  </script>
+
+  <% include ../partials/footer %>
+</body>
+
+</html>

@@ -2,43 +2,76 @@
 <html>
 
 <head>
-  <title><%= title %></title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Audiowide&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,200;0,400;0,500;1,100;1,200;1,600;1,700&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="/style.css" type="text/css">
   <link rel='stylesheet' href='/stylesheets/style.css' />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <title><%= title %> : Home</title>
 </head>
 
-<body>
-  <form action="/logout" method="post">
-    <input type="submit" id="logout" value="Logout">
-  </form>
-  <h1><%= title %></h1>
-  <h3>You are logged in to the <%= title %> App</h3>
-  <p><%= user.firstname %></p>
-  <a href="/users/profile">Update Profile</a>
+<body id="home">
+  <% include ../partials/nav %>
+  <!--Main content containing links to update profile page and report page-->
+  <div class="content">
+    <div class="text">
+      <h2>Register as a Candidate</h2>
+      <p>
+        Update your profile and become a candidate with a single click,
+        click the button below to register as a candidate.
+      </p>
+      <div class="btn-container">
+        <a href="/users/profile" class="btn">UPDATE PROFILE</a>
+        <!-- Results button displays only if the results have been published -->
+        <% if (isPublished == 1) { %>
+        <a href="/users/results" class="btn">VIEW RESULTS</a>
+        <% } %>
+      </div>
+    </div>
 
-  <hr>
+    <img src="/img/3.jpeg" alt="">
+  </div>
 
-  <h2>Cast Your votes</h2>
-  <!--  candidacy['Vice-president'][0].firstname  -->
-  <!-- Object literals are used here because just using the positions variable generates the positions as strings instead of as arrays. So a nifty workaround had to be found -->
-  <% for (let position in candidacy) { %>
-  <h3><%= position %><%= candidacy[position].id %></h3>
-  <form action="/users/vote/<%=user.id%>/<%=candidacy[position].id%>" method="post">
-    <% if (candidacy[`${position}`].candidates.length > 0) { %>
-    <% for (let i = 0; i < candidacy[`${position}`].candidates.length; i++) { %>
-    <p><%= candidacy[`${position}`].candidates[i].firstname %> <%= candidacy[`${position}`].candidates[i].lastname %>
-    </p>
+  <div class="border"></div>
 
-    <img src="/uploads/<%=candidacy[`${position}`].candidates[i].profile_pic%>" alt="Candidate Picture" width="200px"
-      height="200px">
-    <input type="radio" name="candidate" value="<%= candidacy[`${position}`].candidates[i].candidate_id %>" required>
+  <div class="election">
+    <h2>
+      E L E C T I O N
+    </h2>
+    <!--The wrap serves as a container for the single position voting part-->
+    <% for (let position in candidacy) { %>
+    <div class="wrap">
+      <h2>
+        <%= position %>
+      </h2>
+      <form action="/users/vote/<%=user.id%>/<%=candidacy[position].id%>" method="post">
+        <!-- Object literals are used here because just using the positions variable generates the positions as strings instead of as arrays. So a nifty workaround had to be found -->
+        <% if (candidacy[`${position}`].candidates.length > 0) { %>
+
+        <div class="position">
+          <% for (let i = 0; i < candidacy[`${position}`].candidates.length; i++) { %>
+          <span>
+            <!-- <ion-icon name="person"></ion-icon> -->
+            <img src="/uploads/<%=candidacy[`${position}`].candidates[i].profile_pic%>" alt="Candidate Picture"
+              width="200px" height="200px">
+            <p><%= candidacy[`${position}`].candidates[i].firstname %>
+              <%= candidacy[`${position}`].candidates[i].lastname %></p>
+            <input type="radio" name="candidate" value="<%= candidacy[`${position}`].candidates[i].candidate_id %>"
+              required>
+          </span>
+          <% } %>
+        </div>
+        <!--This is the submit button for the vote-->
+        <input type="submit" value="VOTE" class="btn">
+        <% } %>
+      </form>
+    </div>
     <% } %>
-    <% } %>
-    <input type="submit" value="Vote">
-  </form>
-
-  <% } %>
-  <!--This is the submit button for the vote-->
-  <!-- <input type="submit" value="SUBMIT" class="btn"> -->
+  </div>
 
 
   <script type="text/javascript">
@@ -50,6 +83,8 @@
       showAlert(message);
     }
   </script>
+
+  <% include ../partials/footer %>
 </body>
 
 </html>

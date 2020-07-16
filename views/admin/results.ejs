@@ -8,31 +8,48 @@
   <link
     href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,200;0,400;0,500;1,100;1,200;1,600;1,700&display=swap"
     rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
-  <title><%= title %> : Results</title>
+  <link rel="stylesheet" href="/style.css">
+  <title>Results :: <%= title %></title>
   <script src=" https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <title></title>
 </head>
 
-<body>
-  <a href="/admin/home">Back</a>
-  <h1><%= title %> Admin Portal</h1>
-  <hr>
-  <% for (let position in candidacy) { %>
-  <h3><%= position %><%= candidacy[position].id %></h3>
-  <% if (candidacy[`${position}`].candidates.length > 0) { %>
-  <% for (let i = 0; i < candidacy[`${position}`].candidates.length; i++) { %>
-  <p><%= candidacy[`${position}`].candidates[i].firstname %> <%= candidacy[`${position}`].candidates[i].lastname %>
-  </p>
+<body id="report">
+  <% include ../partials/nav %>
 
-  <img src="/uploads/<%=candidacy[`${position}`].candidates[i].profile_pic%>" alt="Candidate Picture" width="200px"
-    height="200px">
-  <p><%=candidacy[`${position}`].candidates[i].votes%></p>
-  <% } %>
-  <% } %>
-  <% } %>
-  <hr>
-  <a href="/admin/publishResults">Publish Results</a>
+  <div class="election">
+    <a href="/admin/home">
+      <ion-icon name="arrow-back-outline"></ion-icon>Back
+    </a>
+    <h2>
+      E L E C T I O N - R E S U L T S
+    </h2>
+
+    <% for (let position in candidacy) { %>
+    <div class="wrap">
+      <h2>
+        <%= position %>
+      </h2>
+      <% if (candidacy[`${position}`].candidates.length > 0) { %>
+      <div class="position">
+        <% for (let i = 0; i < candidacy[`${position}`].candidates.length; i++) { %>
+        <span>
+          <!-- <ion-icon name="person"></ion-icon> -->
+          <img src="/uploads/<%=candidacy[`${position}`].candidates[i].profile_pic%>" alt="Candidate Picture"
+            width="200px" height="200px">
+          <p><%= candidacy[`${position}`].candidates[i].firstname %>
+            <%= candidacy[`${position}`].candidates[i].lastname %></p>
+          <span><%=candidacy[`${position}`].candidates[i].votes%></span>
+        </span>
+        <% } %>
+      </div>
+      <% } %>
+
+    </div>
+    <% } %>
+
+    <a href="/admin/publishResults" class="btn">Publish Results</a>
+  </div>
+
   <script type="text/javascript">
     let message = "<%= message %>";
     showAlert = function (err) {
@@ -42,6 +59,7 @@
       showAlert(message);
     }
   </script>
+  <% include ../partials/footer %>
 </body>
 
 </html>

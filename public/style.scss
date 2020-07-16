@@ -563,10 +563,29 @@ a{
 }
 .btn-container{
     margin-top: 10%;
+    margin-bottom: 10%;
     display: flex;
+    border: 1px solid $blue;
+    form{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+    .btn{
+        width: 80%;
+        height: 50px;
+        padding: 2px;
+    } 
+    }
 
     .btn{
         width: 40%;
+        height: 40px;
+        padding: 2px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-decoration: none;
     }
 }    
 }

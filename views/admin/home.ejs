@@ -4,63 +4,70 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title><%= title %></title>
+  <link href="https://fonts.googleapis.com/css2?family=Audiowide&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,200;0,400;0,500;1,100;1,200;1,600;1,700&display=swap"
+    rel="stylesheet">
+  <!-- <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet"> -->
+  <link rel="stylesheet" href="/style.css" type="text/css">
+  <title>Home :: <%= title %></title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 
-<body>
-  <form action="/logout" method="post">
-    <input type="submit" id="logout" value="Logout">
-  </form>
-  <h1><%= title %> Admin Portal</h1>
-  <p><%= user.firstname %></p>
-  <% if ( startElection == 0 || startElection == 2) { %>
-  <form action="/admin/startElection" method="post">
-    <input type="submit" value="Start Election">
-  </form>
-  <% } else if (startElection == 1) { %>
-  <form action="/admin/endElection" method="post">
-    <input type="submit" value="End Election">
-  </form>
-  <% } %>
-  <br>
-  <a href="/admin/candidates">Approve/Decline Candidates</a>
-  <br>
+<body id="admin">
+  <% include ../partials/nav %>
+  <div class="admin">
+    <div class="admin-form">
+      <div class="btn-container" style="border-width: 0px;">
+        <% if ( startElection == 0 || startElection == 2) { %>
+        <form action="/admin/startElection" method="post">
+          <input type="submit" value="Start Election" class="btn">
+        </form>
+        <% } else if (startElection == 1) { %>
+        <form action="/admin/endElection" method="post">
+          <input type="submit" value="End Election" class="btn">
+        </form>
+        <% } %>
+      </div>
+      <div class="btn-container" style="border-width: 0px;">
+        <a href="/admin/candidates" class="btn">Approve/Decline Candidates</a>
+        <a href="/admin/results" class="btn">View Results</a>
+      </div>
 
-  <form action="/admin/voterDeadline" method="post">
-    <label for="voter-deadline">Voter Deadline</label>
-    <input type="datetime-local" name="voterDeadline" id="voter-deadline">
-    <input type="submit" value="Update">
-  </form>
+      <form action="/admin/voterDeadline" method="post" class="admin-form">
+        <label for="voter-deadline">Voter Deadline</label>
+        <span>
+          <input type="datetime-local" name="voterDeadline" id="voter-deadline">
+          <input type="submit" value="Set" class="btn-set">
+        </span>
+      </form>
 
-  <form action="/admin/candidateDeadline" method="post">
-    <label for="candidate-deadline">Candidate Deadline</label>
-    <input type="datetime-local" name="candidateDeadline" id="candidate-deadline">
-    <input type="submit" value="Update">
-  </form>
+      <form action="/admin/candidateDeadline" method="post" class="admin-form">
+        <label for="candidate-deadline">Candidate Deadline</label>
+        <span>
+          <input type="datetime-local" name="candidateDeadline" id="candidate-deadline">
+          <input type="submit" value="Set" class="btn-set">
+        </span>
+      </form>
 
-  <hr>
-
-  <h3>Create Position of office</h3>
-  <form action="/admin/createPosition" method="post">
-    <label for="position"></label>
-    <input type="text" name="position" id="position">
-    <input type="submit" value="Create">
-  </form>
-  <br>
-  <h4>Availabe Posts</h4>
-  <ol>
-    <% positions.forEach(position => { %>
-    <li><%= position.name %></li>
-    <% }) %>
-  </ol>
-
-  <br>
-  <hr>
-
-  <!-- <form action="/" method="post">
-    <input type="submit" value="Print Report">
-  </form> -->
-  <a href="/admin/results">View Results</a>
+      <h3>Create Position of office</h3>
+      <form action="/admin/createPosition" method="post" class="admin-form">
+        <label for="position"></label>
+        <span class="input">
+          <input type="text" name="position" id="position">
+          <input type="submit" value="Create" class="btn-set">
+        </span>
+      </form>
+      <br>
+      <h4>Availabe Posts</h4>
+      <ol>
+        <% positions.forEach(position => { %>
+        <li><%= position.name %></li>
+        <% }) %>
+      </ol>
+    </div>
+    <img src="/img/3.jpeg" alt="" />
+  </div>
 
   <script type="text/javascript">
     let message = "<%= message %>";
@@ -71,6 +78,7 @@
       showAlert(message);
     }
   </script>
+  <% include ../partials/footer %>
 </body>
 
 </html>

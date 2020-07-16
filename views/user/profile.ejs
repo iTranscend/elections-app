@@ -1,40 +1,70 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
-  <title><%= title %></title>
-  <link rel='stylesheet' href='/stylesheets/style.css' />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Audiowide&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,200;0,400;0,500;1,100;1,200;1,600;1,700&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="/style.css" type="text/css">
+  <title><%= title %> : Profile</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 
-<body>
-  <a href="/users/home">Back</a>
-  <h1><%= title %></h1>
-  <h3>Update Your details</h3>
+<body id="update">
+  <!--Nav section-->
+  <div class="nav">
+    <!--Logo-->
+    <div class="logo">
+      <img src="/img/logo.jpeg" alt="Logo">
+      <p>REDEEMERS UNIVERSITY VOTING SYSTEM</p>
+    </div>
+  </div>
+  <a href="/users/home" class="btn">
+    <ion-icon name="arrow-back-outline"></ion-icon>
+  </a>
+  <div class="updateprofile">
+    <img src="/img/Group 117.png" alt="">
+    <form action="/users/updateProfile" method="post" class="update-form">
+      <label for="fname">First Name</label>
+      <span>
+        <input type="text" name="firstname" id="firstname" placeholder="<%= user.firstname %>" required id="fname">
+        <ion-icon name="person"></ion-icon>
+      </span>
+      <label for="lname">Last Name</label>
+      <span>
+        <input type="text" name="lastname" id="lastname" placeholder="<%= user.lastname %>" required id="lname">
+        <ion-icon name="person"></ion-icon>
+      </span>
 
-  <form action="/users/updateProfile" method="post">
-    <label for="firstname">Firstname</label>
-    <input type="text" name="firstname" id="firstname" placeholder="<%= user.firstname %>" required>
+      <input type="submit" class="btn" value="UPDATE PROFILE">
+    </form>
 
-    <label for="lastname">Lastname</label>
-    <input type="text" name="lastname" id="lastname" placeholder="<%= user.lastname %>" required>
+  </div>
+  <div class="border"></div>
 
-    <input type="submit" value="Update">
-  </form>
-  <br>
-  <hr>
+  <!--This section is for candidacy application-->
+  <div class="application">
+    <h1>Apply for a Position</h1>
 
-  <h3>Apply for a Position of office</h3>
+    <form action="/users/apply/<%=user.id%>" method="post">
+      <div class="app-form">
+        <label for="myList">Select position</label>
+        <select name="position" id="myList">
+          <% positions.forEach(position => { %>
+          <option value="<%= position.id %>"><%= position.name %></option>
+          <% }) %>
+        </select>
 
-  <form action="/users/apply/<%=user.id%>" method="post">
-    <label for="position"></label>
-    <select name="position" id="position">
-      <% positions.forEach(position => { %>
-      <option value="<%= position.id %>"><%= position.name %></option>
-      <% }) %>
-    </select>
+        <input type="submit" value="APPLY" class="btn-apply">
+      </div>
+    </form>
 
-    <input type="submit" value="Apply">
-  </form>
+  </div>
+
+
 
   <script type="text/javascript">
     let message = "<%= message %>";
@@ -45,6 +75,8 @@
       showAlert(message);
     }
   </script>
+
+  <% include ../partials/footer %>
 </body>
 
 </html>
