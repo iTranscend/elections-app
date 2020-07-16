@@ -19,7 +19,7 @@ router.get("/home", function (req, res, next) {
   } else {
     // Check if user is an Admin
     conn.query(
-      "SELECT firstname, role_id FROM users WHERE email = ?",
+      "SELECT * FROM users WHERE email = ?",
       req.session.email,
       function (error, results, fields) {
         console.log(results[0].role_id);
@@ -29,41 +29,34 @@ router.get("/home", function (req, res, next) {
           res.redirect("/");
         } else if (results[0].role_id == 1) {
           // Execute if admin
-          conn.query(
-            "SELECT * FROM users WHERE email = ?",
-            req.session.email,
-            function (error, results, fields) {
-              if (error) throw error;
-              // Get Positions
-              conn.query("SELECT * FROM positions", function (
-                error,
-                positions,
-                fields
-              ) {
-                if (error) throw error;
-                // Get
-                conn.query("SELECT * FROM config WHERE id = 1", async function (
-                  error,
-                  config,
-                  fields
-                ) {
-                  try {
-                    console.log("electionStarted: " + config[0].value);
-                    let startElection = config[0].value;
-                    res.render("admin/home", {
-                      title: "Elections",
-                      message: req.session.message,
-                      user: results[0],
-                      positions,
-                      startElection,
-                    });
-                  } catch (error) {
-                    console.log(error);
-                  }
+          // Get Positions
+          conn.query("SELECT * FROM positions", function (
+            error,
+            positions,
+            fields
+          ) {
+            if (error) throw error;
+            // Get
+            conn.query("SELECT * FROM config WHERE id = 1", async function (
+              error,
+              config,
+              fields
+            ) {
+              try {
+                console.log("electionStarted: " + config[0].value);
+                let startElection = config[0].value;
+                res.render("admin/home", {
+                  title: "Elections",
+                  message: req.session.message,
+                  user: results[0],
+                  positions,
+                  startElection,
                 });
-              });
-            }
-          );
+              } catch (error) {
+                console.log(error);
+              }
+            });
+          });
         }
       }
     );
@@ -150,7 +143,7 @@ router.get("/candidates", function (req, res, next) {
   } else {
     // Check if user is an Admin
     conn.query(
-      "SELECT firstname, role_id FROM users WHERE email = ?",
+      "SELECT * FROM users WHERE email = ?",
       req.session.email,
       function (error, results, fields) {
         console.log(results[0].role_id);
@@ -165,12 +158,13 @@ router.get("/candidates", function (req, res, next) {
             FROM users u
             JOIN candidates c ON u.id = c.user_id
             JOIN positions p ON c.position_id = p.id`,
-            function (error, results, fields) {
+            function (error, candidates, fields) {
               if (error) throw error;
               res.render("admin/candidates", {
                 title: "Elections",
                 message: req.session.message,
-                candidates: results,
+                candidates,
+                user: results[0],
               });
             }
           );
@@ -381,13 +375,14 @@ router.post("/candidateDeadline", upload.none(), function (req, res, next) {
   }
 });
 
+// Route to results page
 router.get("/results", function (req, res, next) {
   if (!req.session.email) {
     res.redirect("/");
   } else {
     // Check if user is an Admin
     conn.query(
-      "SELECT firstname, role_id FROM users WHERE email = ?",
+      "SELECT * FROM users WHERE email = ?",
       req.session.email,
       function (error, results, fields) {
         console.log(results[0].role_id);
@@ -409,7 +404,6 @@ router.get("/results", function (req, res, next) {
                   position.id,
                   async function (error, candidates, fields) {
                     if (error) throw error;
-                    // candidacy[position.name];
 
                     await candidates.forEach((candidate) => {
                       console.log(candidate);
@@ -429,11 +423,6 @@ router.get("/results", function (req, res, next) {
                         }
                       );
                     });
-
-                    // candidacy[position.name]  = candidates
-
-                    // Formation of the compound object to be sent back to user
-                    // candidacy[position.name] = candidates;
                     candidacy[position.name] = {
                       id: position.id,
                       candidates,
@@ -450,16 +439,9 @@ router.get("/results", function (req, res, next) {
                   user: results[0],
                   candidacy,
                 });
-                // req.session.message = "";
-              }, 3000);
+              }, 2500);
             }
           );
-          // req.session.message = "";
-          // res.render("admin/results", {
-          //   title: "Elections",
-          //   message: req.session.message,
-          //   candidates: results,
-          // });
         }
       }
     );

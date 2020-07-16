@@ -57,10 +57,10 @@ router.post("/login", upload.none(), function (req, res, next) {
         req.session.email = email;
 
         if (results[0].role_id == 2 || results[0].role_id == 3) {
-          req.session.message = "Login Successful";
+          req.session.message = "";
           return res.redirect("/users/home");
         } else if (results[0].role_id == 1) {
-          req.session.message = "Login Successful";
+          req.session.message = "";
           return res.redirect("/admin/home");
         }
       } else {
@@ -71,7 +71,7 @@ router.post("/login", upload.none(), function (req, res, next) {
   );
 });
 
-router.post("/logout", async function (req, res, next) {
+router.get("/logout", async function (req, res, next) {
   try {
     await req.session.destroy();
     res.redirect("/");
