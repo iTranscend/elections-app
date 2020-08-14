@@ -4,3 +4,10 @@ node_modules
 uploads/*
 # exception to the rule
 !uploads/.gitkeep 
+
+public/styleOld.css
+public/styleOld.css.map
+public/styleOld.scss
+
+# Old UI dump
+views/user/oldUI.ejs
