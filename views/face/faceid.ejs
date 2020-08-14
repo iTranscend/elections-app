@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/login.css">
+    <script defer src="/face-api/dist/face-api.min.js"></script>
+    <script defer src="/login.js"></script>
+
+
+    <title>Login Page</title>
+</head>
+
+<body>
+    <header>
+        <div class="logo">
+            <a href="/face/login">
+                <img id="logo" src="/Image/footer_logo.fw.png" alt="failed to load image" />
+            </a>
+        </div>
+        <nav>
+            <ul>
+                <!-- <a href="http://localhost:3000/index.html" class="button1">Sign up</a> -->
+
+
+            </ul>
+        </nav>
+    </header>
+    <div>
+        <h1>Welcome, <%= vall.firstname %> </h1>
+
+    </div>
+    <div class="card">
+        <video id="viewer" width="400" height="250" autoplay muted style="display: none"></video>
+
+        <form name="myForm" action="/face/login" onsubmit="submit()" method="post">
+            <div class="form-item">
+                <input id="email" class="textbox" type="hidden" placeholder="email" value=<%= vall.email %> required>
+
+
+                <input id="base64image" class="textbox" type="hidden" placeholder="base64 Image"
+                    value=<%= vall.base64image%>>
+
+                <!-- <input id="password" class="textbox" type="textbox" placeholder="Password" name="password" required> -->
+            </div>
+            <input id="submit-btn" type="button" class="button" style="width: 100%;" value="Click To Capture"
+                onclick="login()">
+            <label id="validate"></label>
+
+            <label id='error'></label>
+
+            <button type='submit' id='submit' value='submit' style="display: none;"></button>
+
+
+
+
+
+
+
+        </form>
+
+    </div>
+
+
+
+</body>
+
+</html>
+
+<!--  -->

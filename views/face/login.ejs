@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/login.css">
+    <script defer src="/face-api/dist/face-api.min.js"></script>
+    <script defer src="/login.js"></script>
+
+
+    <title>Login Page</title>
+</head>
+
+<body>
+
+    <header>
+        <div class="logo">
+            <a href="/face/login">
+                <img id="logo" src="/Image/footer_logo.fw.png" alt="failed to load image" />
+            </a>
+        </div>
+        <nav>
+            <ul>
+                <a href="/face/index" class="button1">Sign up</a>
+
+
+            </ul>
+        </nav>
+    </header>
+    <div>
+        <h1>Welcome to the Redeemer's University Voting Portal.</h1>
+    </div>
+    <!-- <div class="card"> -->
+
+    <form action="/face/faceid" method="post">
+
+
+
+        <div class="form-item">
+            <input id="email" name="email" class="textbox" type="email" placeholder="E-mail" required>
+        </div>
+
+
+        <button id="submit-btn" type="submit" class="button" style="width: 100%;" value="login"> Proceed </button>
+
+    </form>
+
+
+
+    <label id='error'></label>
+    <div id="signup-anchor" style="padding-top: 20px;">Don't have profile? <a href="/face/index">sign up</a>
+    </div>
+    <button type='submit' id='submit' value='submit' style="display: none;"></button>
+
+
+
+
+
+
+
+    <!-- </div> -->
+
+
+
+</body>
+
+</html>
+
+<!--  -->

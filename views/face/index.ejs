@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/styleface.css">
+    <script defer src="/face-api/dist/face-api.min.js"></script>
+    <script defer src="/webcamjs/webcam.min.js"></script>
+    <script defer src="/scriptface.js"></script>
+    <title>Create Profile</title>
+</head>
+
+<body>
+    <header>
+        <div class="logo">
+            <a href="/face/login">
+                <img id="logo" src="/Image/footer_logo.fw.png" alt="failed to load image" />
+            </a>
+        </div>
+        <nav>
+            <ul>
+                <a href="/face/login" class="button1">Log in</a>
+
+
+            </ul>
+        </nav>
+    </header>
+
+    <!-- <form name="myForm" class="form"></form> -->
+    <div class="card">
+        <label id="lb1"><strong>Create Profile</strong></label>
+        <div>
+            <img id="im1" src="/Image/user.png" alt="failed to load image" />
+        </div>
+
+
+        <div class="form-item">
+            <input id="firstName" name="firstName" class="textbox" type="textbox" placeholder="First Name" required>
+        </div>
+        <div class="form-item">
+            <input id="email" class="textbox" type="textbox" placeholder="E-mail" name="email" required>
+        </div>
+        <div class="form-item">
+            <input id="lastName" name="lastName" class="textbox" type="textbox" placeholder="Last Name" required>
+        </div>
+
+        <input id="submit-btn" type="button" class="button" style="width: 100%;" value="submit" onclick="start()">
+
+    </div>
+    <div id="myModal" class="modal">
+
+        <!-- Modal content -->
+        <div class="modal-content">
+            <div class="modal-header">
+                <span class="close">&times;</span>
+                <h2>Face Capture</h2>
+            </div>
+            <div class="modal-body">
+                <form action="/face/url" onsubmit="saveSnap()" method="post">
+                    <video id="viewer" width="400" height="250" autoplay muted></video>
+                    <div id="results" width="400" height="250"></div>
+
+                    <div id='controls'>
+                        <input id="takeSnap-btn" type="button" class="modal-btn" value="Take Snapshot"
+                            onClick="takeSnapshot()">
+                        <input id="saveSnap-btn" type="submit" class="modal-btn" style="display: none;"
+                            value="Save Snapshot">
+                    </div>
+                    <div id="ErrorMessage">
+                        <label id="error" style="display: none;"></label>
+                    </div>
+
+                </form>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    </form>
+</body>
+<!-- <script>
+
+    </script> -->
+
+</html>
