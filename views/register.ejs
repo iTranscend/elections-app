@@ -1,49 +1,81 @@
 <!DOCTYPE html>
 
 <head>
-  <title><%= title %></title>
-  <link rel='stylesheet' href='/stylesheets/style.css' />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Audiowide&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,200;0,400;0,500;1,100;1,200;1,600;1,700&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="/style.css">
+  <title>Registration</title>
+  <script src=" https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 
-<body>
-  <h1><%= title %></h1>
-  <p>Welcome to the <%= title %> App</p>
-  <form action="/register" method="post" enctype="multipart/form-data">
-    <label for="firstname">Firstname</label>
-    <br>
-    <input type="text" name="firstname" id="firstname" required>
-    <br>
-    <br>
-    <label for="lastname">Lastname</label>
-    <br>
-    <input type="text" name="lastname" id="lastname" required>
-    <br>
-    <br>
-    <label for="email">Email</label>
-    <br>
-    <input type="email" name="email" id="email" required>
-    <br>
-    <br>
-    <label for="profilePic">Facial Image:</label>
-    <br>
-    <input type="file" name="profilePic" id="profilePic" required>
-    <br>
-    <br>
-    <label for="password">Password</label>
-    <br>
-    <input type="password" name="password" id="password" required>
-    <br>
-    <br>
-    <label for="passwordConf">Password Confirmation</label>
-    <br>
-    <input type="password" name="passConf" id="passwordConf" required>
-    <br>
-    <br>
-    <input type="submit" value="Submit">
-    <br>
+<body id="registration">
+  <!--Nav section-->
+  <div class="nav">
+    <!--Logo-->
+    <div class="logo">
+      <img src="img/logo.jpeg" alt="">
+      <p>REDEEMERS UNIVERSITY VOTING SYSTEM</p>
+    </div>
+  </div>
 
-    <p>Already have an account? <a href="/index/login">Login</a></p>
-  </form>
+
+  <div class="register">
+    <img src="/img/1.jpeg" alt="" class="img">
+    <!--Form-->
+    <form action="/register" class="register-form" method="POST" enctype="multipart/form-data">
+      <legend>
+        <h3>Register</h3>
+      </legend>
+      <label for="fname">First Name</label>
+      <span>
+        <input type="text" name="firstname" id="fname" placeholder="enter your first name" required>
+        <ion-icon name="person"></ion-icon>
+      </span>
+      <label for="lname">Last Name</label>
+      <span>
+        <input type="text" name="lastname" placeholder="enter your last name" required>
+        <ion-icon name="person"></ion-icon>
+      </span>
+      <label for="email">Email</label>
+      <span>
+        <input type="email" name="email" placeholder="enter your email" required>
+        <ion-icon name="mail"></ion-icon>
+      </span>
+      <!--Upload pics part-->
+      <label for="profilePic">Upload Profile Picture</label>
+      <span class="upload">
+        <label class="uploadlabel">
+          <input type="file" name="profilePic" id="profile-img" required>
+          Choose a picture
+        </label>
+        <img src="" id="profile-img-tag" />
+      </span>
+      <label for="password">Password</label>
+      <span>
+        <input type="password" name="password" id="password" placeholder="enter your password" required>
+        <ion-icon name="lock-closed"></ion-icon>
+      </span>
+      <label for="passwordConf">Re-enter Password</label>
+      <span>
+        <input type="password" name="passwordConf" placeholder="confirm password" required>
+        <ion-icon name="lock-closed"></ion-icon>
+      </span>
+
+
+
+      <input type="submit" class="btn" value="REGISTER">
+      <p>
+        Already have an account? <a href="/">Login</a>
+      </p>
+    </form>
+  </div>
+
+
+  <% include ./partials/footer %>
 </body>
 
 </html>

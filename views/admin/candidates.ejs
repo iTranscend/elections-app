@@ -19,23 +19,24 @@
   <div class="nav">
     <!--Logo-->
     <div class="logo">
-      <img src="/img/logo.jpeg" alt="Logo" style="width: 120px; height: 60px;">
+      <img src="/img/logo.jpeg" alt="Logo" style="width: 200px; height: 90px;">
       <p>REDEEMER'S UNIVERSITY VOTING SYSTEM</p>
     </div>
     <div class="profile-info">
       <div class="profile-text">
-        <span><%= user.firstname %> <%= user.lastname %></span>
+        <span><%= user.firstname %></span>
         <!-- <span></span> -->
         <% if (user.role_id == 1) { %>
         <span>ADMIN</span>
         <% } %>
       </div>
-      <img src="/uploads/<%= user.profile_pic %>">
+      <img src="/uploads/<%= user.profile_pic %>" style="width: 140px; height: 90px; display: inline-block;">
 
     </div>
 
-    <a href="/logout">Log out</a>
+    <a href="/logout" style="display: inline-block;">Log out</a>
   </div>
+  <br>
   <div class="container">
     <a href="/admin/home" class="btn">
       <ion-icon name="arrow-back-outline"></ion-icon>

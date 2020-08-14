@@ -11,7 +11,7 @@
   <link rel="stylesheet" href="/style.css" type="text/css">
   <link rel='stylesheet' href='/stylesheets/style.css' />
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <title><%= title %> : Home</title>
+  <title>Home :: <%= title %></title>
 </head>
 
 <body id="home">
@@ -43,6 +43,7 @@
       E L E C T I O N
     </h2>
     <!--The wrap serves as a container for the single position voting part-->
+    <p>The deadline for voting is <%= voterDeadline %></p>
     <% for (let position in candidacy) { %>
     <div class="wrap">
       <h2>
@@ -65,8 +66,10 @@
           </span>
           <% } %>
         </div>
+        <div style="text-align: center;">
+          <input type="submit" value="VOTE" class="btn">
+        </div>
         <!--This is the submit button for the vote-->
-        <input type="submit" value="VOTE" class="btn">
         <% } %>
       </form>
     </div>

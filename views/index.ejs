@@ -9,28 +9,42 @@
   <link
     href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,200;0,400;0,500;1,100;1,200;1,600;1,700&display=swap"
     rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="/style.css">
 </head>
 
-<body>
-  <h1><%= title %></h1>
-  <p>Welcome to the <%= title %> App</p>
-  <form action="/login" method="post">
-    <label for="email">Email</label>
-    <br>
-    <input type="email" name="email" id="email">
-    <br>
-    <br>
-    <label for="password">Password</label>
-    <br>
-    <input type="password" name="password" id="password">
-    <br>
-    <br>
-    <input type="submit" value="Login">
-    <br>
+<body id="landing">
+  <div class="nav">
+    <!--Logo-->
+    <div class="logo">
+      <img src="/img/logo.jpeg" alt="">
+      <p>REDEEMER'S UNIVERSITY VOTING SYSTEM</p>
+    </div>
+  </div>
 
-    <p>Don't have an account? <a href="register">Register</a></p>
-  </form>
+
+  <div class="login">
+    <img src="/img/1.jpeg" alt="">
+    <!--Form-->
+    <form action="/login" class="login-form" method="POST">
+      <label for="email">Email</label>
+      <span>
+        <input type="text" name="email" placeholder="Enter your email">
+        <ion-icon name="mail"></ion-icon>
+      </span>
+      <label for="password">Password</label>
+      <span>
+        <input type="password" name="password" placeholder="Enter your password">
+        <ion-icon name="lock-closed"></ion-icon>
+      </span>
+      <input type="submit" class="btn" value="LOGIN">
+      <p>
+        Don't have an account? <a href="/register"> Register</a>
+      </p>
+    </form>
+  </div>
+
+
+
 
   <script type="text/javascript">
     let message = "<%= message %>";
@@ -41,6 +55,7 @@
       showAlert(message);
     }
   </script>
+  <script src="https://unpkg.com/ionicons@5.1.2/dist/ionicons.js"></script>
 </body>
 
 </html>
