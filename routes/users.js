@@ -35,42 +35,55 @@ router.get("/home", async function (req, res, next) {
         ) {
           let isPublished = published[0].value;
           console.log("Results Published: " + isPublished);
-          // Get positions of office
-          conn.query(
-            "SELECT id, name FROM positions ORDER BY id",
-            async function (err, positions, fields) {
-              let candidacy = [];
-              if (err) throw err;
-              await console.log("Positions:", positions);
-              await positions.forEach(async (element) => {
-                conn.query(
-                  "SELECT u.firstname AS firstname, u.lastname AS lastname, u.profile_pic AS profile_pic, c.id AS candidate_id FROM users u JOIN candidates c ON u.id = c.user_id JOIN positions p ON p.id = c.position_id WHERE c.is_approved = 1 and p.id = ? ORDER BY p.id",
-                  element.id,
-                  async function (error, candidates, fields) {
-                    if (error) throw error;
-                    // await console.log(candidates);
-                    // Formation of the compound object to be sent back to user
-                    candidacy[element.name] = candidates;
-                    candidacy[element.name] = {
-                      id: element.id,
-                      candidates,
-                    };
-                  }
-                );
-              });
-              await setTimeout(async () => {
-                await console.log("Candidacy:", candidacy);
-                return res.render("user/home", {
-                  title: "Elections",
-                  message: req.session.message,
-                  user: results[0],
-                  candidacy,
-                  isPublished,
-                });
-                // req.session.message = "";
-              }, 2500);
+          //  Get voter deadline
+          conn.query("SELECT * FROM deadlines WHERE id = 2", async function (
+            err,
+            deadline,
+            fields
+          ) {
+            try {
+              let voterDeadline = deadline[0].value;
+              // Get positions of office
+              conn.query(
+                "SELECT id, name FROM positions ORDER BY id",
+                async function (err, positions, fields) {
+                  let candidacy = [];
+                  if (err) throw err;
+                  await console.log("Positions:", positions);
+                  await positions.forEach(async (element) => {
+                    conn.query(
+                      "SELECT u.firstname AS firstname, u.lastname AS lastname, u.profile_pic AS profile_pic, c.id AS candidate_id FROM users u JOIN candidates c ON u.id = c.user_id JOIN positions p ON p.id = c.position_id WHERE c.is_approved = 1 and p.id = ? ORDER BY p.id",
+                      element.id,
+                      async function (error, candidates, fields) {
+                        if (error) throw error;
+                        // await console.log(candidates);
+                        // Formation of the compound object to be sent back to user
+                        candidacy[element.name] = candidates;
+                        candidacy[element.name] = {
+                          id: element.id,
+                          candidates,
+                        };
+                      }
+                    );
+                  });
+                  await setTimeout(async () => {
+                    await console.log("Candidacy:", candidacy);
+                    return res.render("user/home", {
+                      title: "Elections",
+                      message: req.session.message,
+                      user: results[0],
+                      candidacy,
+                      isPublished,
+                      voterDeadline,
+                    });
+                    // req.session.message = "";
+                  }, 2500);
+                }
+              );
+            } catch (error) {
+              console.log(error);
             }
-          );
+          });
         });
       }
     );
@@ -88,19 +101,35 @@ router.get("/profile", function (req, res, next) {
       req.session.email,
       function (error, results, fields) {
         if (error) throw error;
-        let user = results[0];
-        // Get available positions
-        conn.query("SELECT * FROM positions", function (error, rows, fields) {
-          if (error) throw error;
-          let positions = rows;
-          console.log(positions);
-          // Render page
-          res.render("user/profile", {
-            title: "Elections",
-            message: req.session.message,
-            user: user,
-            positions: positions,
-          });
+        conn.query("SELECT * FROM deadlines WHERE id = 1", async function (
+          err,
+          rows,
+          fields
+        ) {
+          try {
+            let candidateDeadline = rows[0].value;
+            let user = results[0];
+            // Get available positions
+            conn.query("SELECT * FROM positions", function (
+              error,
+              rows,
+              fields
+            ) {
+              if (error) throw error;
+              let positions = rows;
+              console.log(positions);
+              // Render page
+              res.render("user/profile", {
+                title: "Elections",
+                message: req.session.message,
+                user: user,
+                positions: positions,
+                candidateDeadline: candidateDeadline,
+              });
+            });
+          } catch (error) {
+            console.log(error);
+          }
         });
       }
     );
