@@ -52,6 +52,7 @@ router.post("/login", upload.none(), function (req, res, next) {
     "SELECT * FROM users WHERE email = ? AND password = ?",
     [email, password],
     function (error, results, fields) {
+      if (error) throw error;
       if (results.length > 0) {
         req.session.loggedin = true;
         req.session.email = email;
